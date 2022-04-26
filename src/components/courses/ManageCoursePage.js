@@ -21,27 +21,31 @@ export function ManageCoursePage({
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (courses.length === 0) {
-      loadCourses().catch(error => {
+      try {
+        await loadCourses();
+      } catch (error) {
         alert("Loading courses failed" + error);
-      });
+      }
     } else {
       setCourse({ ...props.course });
     }
 
     if (authors.length === 0) {
-      loadAuthors().catch(error => {
+      try {
+        await loadAuthors();
+      } catch (error) {
         alert("Loading authors failed" + error);
-      });
+      }
     }
   }, [props.course]);
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setCourse(prevCourse => ({
+    setCourse((prevCourse) => ({
       ...prevCourse,
-      [name]: name === "authorId" ? parseInt(value, 10) : value
+      [name]: name === "authorId" ? parseInt(value, 10) : value,
     }));
   }
 
@@ -58,19 +62,19 @@ export function ManageCoursePage({
     return Object.keys(errors).length === 0;
   }
 
-  function handleSave(event) {
+  async function handleSave(event) {
     event.preventDefault();
     if (!formIsValid()) return;
     setSaving(true);
-    saveCourse(course)
-      .then(() => {
-        toast.success("Course saved.");
-        history.push("/courses");
-      })
-      .catch(error => {
-        setSaving(false);
-        setErrors({ onSave: error.message });
-      });
+
+    try {
+      await saveCourse(course);
+      toast.success("Course saved.");
+      history.push("/courses");
+    } catch (error) {
+      setSaving(false);
+      setErrors({ onSave: error.message });
+    }
   }
 
   return authors.length === 0 || courses.length === 0 ? (
@@ -94,11 +98,11 @@ ManageCoursePage.propTypes = {
   loadCourses: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
   saveCourse: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 };
 
 export function getCourseBySlug(courses, slug) {
-  return courses.find(course => course.slug === slug) || null;
+  return courses.find((course) => course.slug === slug) || null;
 }
 
 function mapStateToProps(state, ownProps) {
@@ -110,17 +114,14 @@ function mapStateToProps(state, ownProps) {
   return {
     course,
     courses: state.courses,
-    authors: state.authors
+    authors: state.authors,
   };
 }
 
 const mapDispatchToProps = {
   loadCourses,
   loadAuthors,
-  saveCourse
+  saveCourse,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ManageCoursePage);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);

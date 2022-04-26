@@ -7,16 +7,14 @@ export function loadAuthorsSuccess(authors) {
 }
 
 export function loadAuthors() {
-  return function(dispatch) {
+  return async function (dispatch) {
     dispatch(beginApiCall());
-    return authorApi
-      .getAuthors()
-      .then(authors => {
-        dispatch(loadAuthorsSuccess(authors));
-      })
-      .catch(error => {
-        dispatch(apiCallError(error));
-        throw error;
-      });
+    try {
+      let authors = await authorApi.getAuthors();
+      return dispatch(loadAuthorsSuccess(authors));
+    } catch (error) {
+      dispatch(apiCallError(error));
+      throw error;
+    }
   };
 }

@@ -1,8 +1,12 @@
 import { handleResponse, handleError } from "./apiUtils";
 const baseUrl = process.env.API_URL + "/authors/";
 
-export function getAuthors() {
-  return fetch(baseUrl)
-    .then(handleResponse)
-    .catch(handleError);
+export async function getAuthors() {
+  try {
+    let response = await fetch(baseUrl);
+    let result = await handleResponse(response);
+    return result;
+  } catch (error) {
+    handleError(error);
+  }
 }
