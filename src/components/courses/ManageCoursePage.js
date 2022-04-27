@@ -21,25 +21,33 @@ export function ManageCoursePage({
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
 
-  useEffect(async () => {
-    if (courses.length === 0) {
-      try {
-        await loadCourses();
-      } catch (error) {
-        alert("Loading courses failed" + error);
+  useEffect(
+    async () => {
+      // if courses are not available yet...
+      if (courses.length === 0) {
+        try {
+          await loadCourses();
+        } catch (error) {
+          alert("Loading courses failed" + error);
+        }
       }
-    } else {
-      setCourse({ ...props.course });
-    }
+      // if we do have courses available...
+      else {
+        // then set our course in state to the course passed in on props.
+        // This will copy the course passed in on props to state anytime a new course is passed in.
+        setCourse({ ...props.course });
+      }
 
-    if (authors.length === 0) {
-      try {
-        await loadAuthors();
-      } catch (error) {
-        alert("Loading authors failed" + error);
+      if (authors.length === 0) {
+        try {
+          await loadAuthors();
+        } catch (error) {
+          alert("Loading authors failed" + error);
+        }
       }
-    }
-  }, [props.course]);
+    },
+    [props.course] // run any time a new course is passed in on props
+  );
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -108,11 +116,11 @@ export function getCourseBySlug(courses, slug) {
 function mapStateToProps(state, ownProps) {
   const slug = ownProps.match.params.slug;
   const course =
-    slug && state.courses.length > 0
+    slug && state.courses.length > 0 // make sure the api call to get courses is complete
       ? getCourseBySlug(state.courses, slug)
       : newCourse;
   return {
-    course,
+    course: course,
     courses: state.courses,
     authors: state.authors,
   };

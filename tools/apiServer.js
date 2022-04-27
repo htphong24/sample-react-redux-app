@@ -26,7 +26,7 @@ server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
 // Simulate delay on all requests
-server.use(function(req, res, next) {
+server.use(function (req, res, next) {
   setTimeout(next, 2000);
 });
 
@@ -41,7 +41,7 @@ server.use((req, res, next) => {
   next();
 });
 
-server.post("/courses/", function(req, res, next) {
+server.post("/courses/", function (req, res, next) {
   const error = validateCourse(req.body);
   if (error) {
     res.status(400).send(error);
@@ -55,7 +55,7 @@ server.post("/courses/", function(req, res, next) {
 server.use(router);
 
 // Start server
-const port = 3001;
+const port = 3101;
 server.listen(port, () => {
   console.log(`JSON Server is running on port ${port}`);
 });
