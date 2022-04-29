@@ -11,22 +11,26 @@ import { toast } from "react-toastify";
 
 function CoursesPage({ courses, authors, actions, ...props }) {
   const [redirectToAddCoursePage, setRedirectToAddCoursePage] = useState(false);
-  useEffect(async () => {
-    if (courses.length === 0) {
-      try {
-        await actions.loadCourses();
-      } catch (error) {
-        alert("Loading courses failed" + error);
+  useEffect(() => {
+    (async () => {
+      if (courses.length === 0) {
+        try {
+          await actions.loadCourses();
+        } catch (error) {
+          alert("Loading courses failed" + error);
+        }
       }
-    }
+    })();
 
-    if (authors.length === 0) {
-      try {
-        await actions.loadAuthors();
-      } catch (error) {
-        alert("Loading authors failed" + error);
+    (async () => {
+      if (authors.length === 0) {
+        try {
+          await actions.loadAuthors();
+        } catch (error) {
+          alert("Loading authors failed" + error);
+        }
       }
-    }
+    })();
   }, []);
 
   async function handleDeleteCourse(course) {

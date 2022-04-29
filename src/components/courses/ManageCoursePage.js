@@ -22,29 +22,34 @@ export function ManageCoursePage({
   const [saving, setSaving] = useState(false);
 
   useEffect(
-    async () => {
-      // if courses are not available yet...
-      if (courses.length === 0) {
-        try {
-          await loadCourses();
-        } catch (error) {
-          alert("Loading courses failed" + error);
+    () => {
+      (async () => {
+        // if courses are not available yet...
+        if (courses.length === 0) {
+          try {
+            await loadCourses();
+          } catch (error) {
+            alert("Loading courses failed" + error);
+          }
         }
-      }
-      // if we do have courses available...
-      else {
-        // then set our course in state to the course passed in on props.
-        // This will copy the course passed in on props to state anytime a new course is passed in.
-        setCourse({ ...props.course });
-      }
+        // if we do have courses available...
+        else {
+          // then set our course in state to the course passed in on props.
+          // This will copy the course passed in on props to state anytime a new course is passed in.
+          setCourse({ ...props.course });
+        }
+      })();
 
-      if (authors.length === 0) {
-        try {
-          await loadAuthors();
-        } catch (error) {
-          alert("Loading authors failed" + error);
+      (async () => {
+        // if authors are not available yet...
+        if (authors.length === 0) {
+          try {
+            await loadAuthors();
+          } catch (error) {
+            alert("Loading authors failed" + error);
+          }
         }
-      }
+      })();
     },
     [props.course] // run any time a new course is passed in on props
   );
