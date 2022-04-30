@@ -63,7 +63,7 @@ const CoursesPage = () => {
           <button
             style={{ marginBottom: 20 }}
             className="btn btn-primary add-course"
-            onClick={() => dispatch(setRedirectToAddCoursePage(true))}
+            onClick={() => setRedirectToAddCoursePage(true)}
           >
             Add Course
           </button>
