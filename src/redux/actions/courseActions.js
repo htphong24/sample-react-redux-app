@@ -2,24 +2,24 @@ import * as types from "./actionTypes";
 import * as courseApi from "../../api/courseApi";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
 
-export function loadCourseSuccess(courses) {
+export const loadCourseSuccess = (courses) => {
   return { type: types.LOAD_COURSES_SUCCESS, courses };
-}
+};
 
-export function createCourseSuccess(course) {
+export const createCourseSuccess = (course) => {
   return { type: types.CREATE_COURSE_SUCCESS, course };
-}
+};
 
-export function updateCourseSuccess(course) {
+export const updateCourseSuccess = (course) => {
   return { type: types.UPDATE_COURSE_SUCCESS, course };
-}
+};
 
-export function deleteCourseOptimistic(course) {
+export const deleteCourseOptimistic = (course) => {
   return { type: types.DELETE_COURSE_OPTIMISTIC, course };
-}
+};
 
-export function loadCourses() {
-  return async function (dispatch) {
+export const loadCourses = () => {
+  return async (dispatch) => {
     dispatch(beginApiCall());
     try {
       let courses = await courseApi.getCourses();
@@ -29,11 +29,11 @@ export function loadCourses() {
       throw error;
     }
   };
-}
+};
 
-export function saveCourse(course) {
+export const saveCourse = (course) => {
   //eslint-disable-next-line no-unused-vars
-  return async function (dispatch, getState) {
+  return async (dispatch, getState) => {
     dispatch(beginApiCall());
     try {
       let savedCourse = await courseApi.saveCourse(course);
@@ -45,13 +45,13 @@ export function saveCourse(course) {
       throw error;
     }
   };
-}
+};
 
-export function deleteCourse(course) {
-  return function (dispatch) {
+export const deleteCourse = (course) => {
+  return (dispatch) => {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteCourseOptimistic(course));
     return courseApi.deleteCourse(course.id);
   };
-}
+};

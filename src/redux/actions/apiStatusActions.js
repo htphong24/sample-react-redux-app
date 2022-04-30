@@ -1,9 +1,9 @@
 import * as types from "./actionTypes";
 
-export function beginApiCall() {
+export const beginApiCall = () => {
   return { type: types.BEGIN_API_CALL };
-}
+};
 
-export function apiCallError() {
+export const apiCallError = () => {
   return { type: types.API_CALL_ERROR };
-}
+};

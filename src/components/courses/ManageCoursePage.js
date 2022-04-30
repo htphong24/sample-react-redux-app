@@ -45,15 +45,15 @@ const ManageCoursePage = (props) => {
     }
   }, [propsCourse]);
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setCourse((prevCourse) => ({
       ...prevCourse,
       [name]: name === "authorId" ? parseInt(value, 10) : value,
     }));
-  }
+  };
 
-  function formIsValid() {
+  const formIsValid = () => {
     const { title, authorId, category } = course;
     const errors = {};
 
@@ -64,9 +64,9 @@ const ManageCoursePage = (props) => {
     setErrors(errors);
     // Form is valid if the errors object still has no properties
     return Object.keys(errors).length === 0;
-  }
+  };
 
-  function handleSave(event) {
+  const handleSave = (event) => {
     event.preventDefault();
     if (!formIsValid()) return;
     setSaving(true);
@@ -79,7 +79,7 @@ const ManageCoursePage = (props) => {
       setSaving(false);
       setErrors({ onSave: error.message });
     }
-  }
+  };
 
   return authors.length === 0 || courses.length === 0 ? (
     <Spinner />
@@ -95,8 +95,8 @@ const ManageCoursePage = (props) => {
   );
 };
 
-export function getCourseBySlug(courses, slug) {
+export const getCourseBySlug = (courses, slug) => {
   return courses.find((course) => course.slug === slug) || null;
-}
+};
 
 export default ManageCoursePage;

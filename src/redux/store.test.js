@@ -3,11 +3,11 @@ import rootReducer from "./reducers";
 import initialState from "./reducers/initialState";
 import * as courseActions from "./actions/courseActions";
 
-it("Should handle creating courses", function() {
+it("Should handle creating courses", () => {
   // arrange
   const store = createStore(rootReducer, initialState);
   const course = {
-    title: "Clean Code"
+    title: "Clean Code",
   };
 
   // act

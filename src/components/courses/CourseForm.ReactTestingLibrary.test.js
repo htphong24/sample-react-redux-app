@@ -2,19 +2,19 @@ import React from "react";
 import { render } from "@testing-library/react";
 import CourseForm from "./CourseForm";
 
-function renderCourseForm(args) {
+const renderCourseForm = (args) => {
   let defaultProps = {
     authors: [],
     course: {},
     saving: false,
     errors: {},
     onSave: () => {},
-    onChange: () => {}
+    onChange: () => {},
   };
 
   const props = { ...defaultProps, ...args };
   return render(<CourseForm {...props} />);
-}
+};
 
 it("should render Add Course header", () => {
   const { getByText } = renderCourseForm();

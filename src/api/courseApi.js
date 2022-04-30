@@ -1,7 +1,7 @@
 import { handleResponse, handleError } from "./apiUtils";
 const baseUrl = process.env.API_URL + "/courses/";
 
-export async function getCourses() {
+export const getCourses = async () => {
   try {
     let response = await fetch(baseUrl);
     let result = await handleResponse(response);
@@ -9,9 +9,9 @@ export async function getCourses() {
   } catch (error) {
     handleError(error);
   }
-}
+};
 
-export async function saveCourse(course) {
+export const saveCourse = async (course) => {
   try {
     let response = await fetch(baseUrl + (course.id || ""), {
       method: course.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
@@ -23,9 +23,9 @@ export async function saveCourse(course) {
   } catch (error) {
     handleError(error);
   }
-}
+};
 
-export async function deleteCourse(courseId) {
+export const deleteCourse = async (courseId) => {
   try {
     let response = await fetch(baseUrl + courseId, { method: "DELETE" });
     let result = await handleResponse(response);
@@ -33,4 +33,4 @@ export async function deleteCourse(courseId) {
   } catch (error) {
     handleError(error);
   }
-}
+};

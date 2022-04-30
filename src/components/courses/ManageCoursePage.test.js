@@ -3,7 +3,7 @@ import { mount } from "enzyme";
 import { authors, newCourse, courses } from "../../../tools/mockData";
 import { ManageCoursePage } from "./ManageCoursePage";
 
-function render(args) {
+const render = (args) => {
   const defaultProps = {
     authors,
     courses,
@@ -16,13 +16,13 @@ function render(args) {
     loadAuthors: jest.fn(),
     loadCourses: jest.fn(),
     course: newCourse,
-    match: {}
+    match: {},
   };
 
   const props = { ...defaultProps, ...args };
 
   return mount(<ManageCoursePage {...props} />);
-}
+};
 
 it("sets error when attempting to save an empty title field", () => {
   const wrapper = render();

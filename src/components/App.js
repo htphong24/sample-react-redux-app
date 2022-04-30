@@ -9,7 +9,7 @@ import ManageCoursePage from "./courses/ManageCoursePage"; // eslint-disable-lin
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+const App = () => {
   return (
     <div className="container-fluid">
       <Header />
@@ -24,6 +24,6 @@ function App() {
       <ToastContainer autoClose={3000} hideProgressBar />
     </div>
   );
-}
+};
 
 export default App;

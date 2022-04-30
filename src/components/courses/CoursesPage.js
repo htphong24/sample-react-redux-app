@@ -42,7 +42,7 @@ const CoursesPage = () => {
     }
   }, []);
 
-  function handleDeleteCourse(course) {
+  const handleDeleteCourse = (course) => {
     toast.success("Course deleted");
 
     try {
@@ -50,7 +50,7 @@ const CoursesPage = () => {
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }
-  }
+  };
 
   return (
     <>
